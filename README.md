@@ -148,7 +148,9 @@ This is an implicit data type, but it would probably be nice to define one. (We 
 
 This is currently how we perform any interactions from one user's perspective to another. It is composed of all methods needed to interact between users. 
 
-* `Map<String, String> sendRoomNames()`
+### `Map<String, String> sendRoomNames()`
+
+
 * `IStub[] sendOccupants(String : roomID)`
 * `Integer addUserToRoom(IStub : userStub, String: roomID)`
 * `Integer receiveInvite(IStub : userStub, String : roomID)`
@@ -185,7 +187,5 @@ Connecting to an IP is a critical part of the interaction between users, but it 
 ### 4. Predefined vs. Freedom to Define
 Should we pre-define the needed objects such as Invite, ChatRoom, User, etc. that people should use? This would encapsulate a lot of the methods that are needed, meaning that it would be more clear what each thing should do. However, it would mean that we would be restricting people to implement things the way we see them, and it would mean that our API would not necessarily be clean, orthogonal, and minimal. Or we could define interfaces and allow the users of our API to define the exact implementation. How much control should we (and are we allowed to) take?
 
-
-
-
-
+### 5. Concurrency
+It is probably a good idea to use objects from the `java.util.concurrency` package, so the rare situations like receiving multiple simultaneous invites or messages are handled. However, in peer-to-peer networks with local copies of the same data shared among everyone, it seems that maintaining concurrency is too complicated of a problem to worry about given the rarity of the possible data race occurences.
