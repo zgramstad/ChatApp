@@ -3,7 +3,7 @@ Hi! Welcome to our documentation page. All the information and resources you nee
 
 
 # Table of Contents
-* [**Understanding Our API**](https://github.com/zgramstad/ChatApp/blob/master/README.md#current-data-types)
+* [**Understanding Our API**](https://github.com/zgramstad/ChatApp/blob/master/README.md#understanding-our-api-definitions)
 * [**Quick Start Guide**](https://github.com/zgramstad/ChatApp/blob/master/README.md#quick-start-guide)
 * [**FAQs**](https://github.com/zgramstad/ChatApp/blob/master/README.md#faqs)
 * [**Possible Changes and Updates**](https://github.com/zgramstad/ChatApp/blob/master/README.md#possible-changes-and-updates)
