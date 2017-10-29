@@ -78,7 +78,7 @@ Nothing
 	1. Add `remoteSelfStub` to everyone else’s rooms: `stub.addUserToRoom(RemoteSelfStub, RoomId)`
 1. *Add user to my room if add was successful (could this cause problems with a mismatch in separate local chat rooms?)*
 
-*Notice Anything Familiar???* ***We are able to reuse the same API functions from connect.***
+*Notice Anything Familiar???* ***We are able to reuse the same API functions from Connect to Room.***
 
 
 ## Decline an Invite
