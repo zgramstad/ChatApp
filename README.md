@@ -3,7 +3,7 @@ Hi! Welcome to our documentation page. All the information and resources you nee
 
 
 # Table of Contents
-* [**Understanding Our API**](https://github.com/zgramstad/ChatApp/blob/master/README.md#understanding-our-api-definitions)
+* [**Understanding Our API**](https://github.com/zgramstad/ChatApp/blob/master/README.md#current-data-types)
 * [**Quick Start Guide**](https://github.com/zgramstad/ChatApp/blob/master/README.md#quick-start-guide)
 * [**FAQs**](https://github.com/zgramstad/ChatApp/blob/master/README.md#faqs)
 * [**Possible Changes and Updates**](https://github.com/zgramstad/ChatApp/blob/master/README.md#possible-changes-and-updates)
@@ -50,7 +50,7 @@ This is currently how we perform any interactions from one user's perspective to
 
 ### IMessage
 
-An `IMessage` is what is sent inside a `DataPacket`. Processing messages is via the visitor design pattern. A message is the host defined as having a `type`, `data` (what to display), a `name` (the display name of the sender) and a `process()` method (how to display it).
+An `IMessage` is what is sent inside a `DataPacket`. Processing messages is via the visitor design pattern. A message is the host defined as having a `type` (the type of the data), `data` (what to display), a `name` (the display name of the sender) and a `process()` method (how to display it).
 
 `receiveMessage()` has various message types it can handle. If the message is of known type, then the system uses its own protocol to display it. However, if a message is received that contains a type unknown to the system, `receiveMessage()` calls the message's own `process()` method.
 
