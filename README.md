@@ -140,7 +140,7 @@ You probably want to be able to view and respond to multiple invites simultaneou
 ### User
 This is an implicit data type, but it would probably be nice to define one. (We might even define one later). The user could have fields such as its name to be prepended to messages, pending invites, and its current chatrooms. All of this could just sit in the model. However, no one wants that (**DECOUPLE EVERYTHING!!!**).
 
-###IStub
+### IStub
 
 This is currently how we perform any interactions from one user's perspective to another. It is composed of all methods needed to interact between users. 
 
