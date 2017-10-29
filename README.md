@@ -148,9 +148,7 @@ This is an implicit data type, but it would probably be nice to define one. (We 
 
 This is currently how we perform any interactions from one user's perspective to another. It is composed of all methods needed to interact between users. 
 
-### `Map<String, String> sendRoomNames()`
-
-
+* `Map<String, String> sendRoomNames()`
 * `IStub[] sendOccupants(String : roomID)`
 * `Integer addUserToRoom(IStub : userStub, String: roomID)`
 * `Integer receiveInvite(IStub : userStub, String : roomID)`
@@ -189,3 +187,9 @@ Should we pre-define the needed objects such as Invite, ChatRoom, User, etc. tha
 
 ### 5. Concurrency
 It is probably a good idea to use objects from the `java.util.concurrency` package, so the rare situations like receiving multiple simultaneous invites or messages are handled. However, in peer-to-peer networks with local copies of the same data shared among everyone, it seems that maintaining concurrency is too complicated of a problem to worry about given the rarity of the possible data race occurences.
+
+
+
+
+
+
