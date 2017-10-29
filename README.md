@@ -78,7 +78,7 @@ Nothing
 	1. Add `remoteSelfStub` to everyone else’s rooms: `stub.addUserToRoom(RemoteSelfStub, RoomId)`
 1. *Add user to my room if add was successful (could this cause problems with a mismatch in separate local chat rooms?)*
 
-*Notice Anything Familiar???* ***We are able to reuse the same API functions from Connect to Room.***
+*Notice Anything Familiar???* ***We are able to reuse the same API functions from connect.***
 
 
 ## Decline an Invite
@@ -144,6 +144,15 @@ This is an implicit data type, but it would probably be nice to define one. (We 
 
 This is currently how we perform any interactions from one user's perspective to another. It is composed of all methods needed to interact between users. 
 
+### `Map<String, String> sendRoomNames()`
+
+
+* `IStub[] sendOccupants(String : roomID)`
+* `Integer addUserToRoom(IStub : userStub, String: roomID)`
+* `Integer receiveInvite(IStub : userStub, String : roomID)`
+* `Integer removeUserFromRoom(IStub : userStub, String : roomID)`
+* `Integer receiveMessage(Class<T> : classType, DataPacket<T, S> : data, String : roomID)`
+
 # FAQs
 
 Will be updated upon feedback.
@@ -166,3 +175,15 @@ There seems to be a sort of division falling out of our API methods. We might be
 
 ### 2. Perspective of Method Calls
 Currently all method names are from the perspective of the stub. However, it is definitely more intuitive to have the method names be from the perspective of the one calling the methods, so that could change (`sendOccupants` -> `getOccupants`, `receiveInvite` -> `sendInvite`). However, we all have IDEs with autocomplete, so it probably wouldn't be to difficult either way.
+
+
+### 3. Do we really need `connectToIP`?
+Connecting to an IP is a critical part of the interaction between users, but it is currently a combination of just the standard RMIServer 2 line code (to connect to an IP and get the stub) and the `sendRoomNames()` method on the `remoteUserStub` that is returned. So we might be able to assume that the method will be written by others.
+
+### 4. Predefined vs. Freedom to Define
+Should we pre-define the needed objects such as Invite, ChatRoom, User, etc. that people should use? This would encapsulate a lot of the methods that are needed, meaning that it would be more clear what each thing should do. However, it would mean that we would be restricting people to implement things the way we see them, and it would mean that our API would not necessarily be clean, orthogonal, and minimal. Or we could define interfaces and allow the users of our API to define the exact implementation. How much control should we (and are we allowed to) take?
+
+
+
+
+
