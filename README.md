@@ -155,6 +155,12 @@ This is currently how we perform any interactions from one user's perspective to
 * `Integer removeUserFromRoom(IStub : userStub, String : roomID)`
 * `Integer receiveMessage(Class<T> : classType, DataPacket<T, S> : data, String : roomID)`
 
+### IMessage
+
+An `IMessage` is what is sent inside a `DataPacket`. Processing messages is via the visitor design pattern. A message is the host defined as having a `type`, `data` (what to display), a `name` (the display name of the sender) and a `process()` method (how to display it).
+
+`receiveMessage()` has various message types it can handle. If the message is of known type, then the system uses its own protocol to dispaly it. However, if a message is received that contains a type unknown to the user, `receiveMessage()` calls the `process()` method on the message.
+
 # FAQs
 
 Will be updated upon feedback.
@@ -186,10 +192,4 @@ Connecting to an IP is a critical part of the interaction between users, but it 
 Should we pre-define the needed objects such as Invite, ChatRoom, User, etc. that people should use? This would encapsulate a lot of the methods that are needed, meaning that it would be more clear what each thing should do. However, it would mean that we would be restricting people to implement things the way we see them, and it would mean that our API would not necessarily be clean, orthogonal, and minimal. Or we could define interfaces and allow the users of our API to define the exact implementation. How much control should we (and are we allowed to) take?
 
 ### 5. Concurrency
-It is probably a good idea to use objects from the `java.util.concurrency` package, so the rare situations like receiving multiple simultaneous invites or messages are handled. However, in peer-to-peer networks with local copies of the same data shared among everyone, it seems that maintaining concurrency is too complicated of a problem to worry about given the rarity of the possible data race occurences.
-
-
-
-
-
-
+It is probably a good idea to use objects from the `java.util.concurrency` package, so the rare situations like receiving multiple simultaneous invites or messages are handled. AHowever, in peer-to-peer networks with local copies of the same data shared among everyone, it seems that maintaining concurrency is too complicated of a problem to worry about given the rarity of the possible data race occurences.
