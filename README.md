@@ -148,9 +148,7 @@ This is an implicit data type, but it would probably be nice to define one. (We 
 
 This is currently how we perform any interactions from one user's perspective to another. It is composed of all methods needed to interact between users. 
 
-### `Map<String, String> sendRoomNames()`
-
-
+* `Map<String, String> sendRoomNames()`
 * `IStub[] sendOccupants(String : roomID)`
 * `Integer addUserToRoom(IStub : userStub, String: roomID)`
 * `Integer receiveInvite(IStub : userStub, String : roomID)`
