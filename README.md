@@ -116,7 +116,7 @@ i.e For each `remoteUserStub` in `remoteUserStubsList`, do: `remoteUserStub.rece
 *You will notice that sending a message to a group requires no new methods as compared to sending a message to an individual. This is because, in a peer-to-peer architecture, sending a message to a group of people is just a repeated action of sending a message to an individual person. Since a chatroom is defined as a roomId and list of user stubs, sending a message to an entire chatroom is just looping through its remote stubs.*
 
 
-##Create Room
+## Create Room
 
 That’s local. Do it yourself.
 
