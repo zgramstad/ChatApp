@@ -159,7 +159,7 @@ This is currently how we perform any interactions from one user's perspective to
 
 An `IMessage` is what is sent inside a `DataPacket`. Processing messages is via the visitor design pattern. A message is the host defined as having a `type`, `data` (what to display), a `name` (the display name of the sender) and a `process()` method (how to display it).
 
-`receiveMessage()` has various message types it can handle. If the message is of known type, then the system uses its own protocol to dispaly it. However, if a message is received that contains a type unknown to the user, `receiveMessage()` calls the `process()` method on the message.
+`receiveMessage()` has various message types it can handle. If the message is of known type, then the system uses its own protocol to display it. However, if a message is received that contains a type unknown to the system, `receiveMessage()` calls the message's own `process()` method.
 
 # FAQs
 
