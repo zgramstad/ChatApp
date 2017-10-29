@@ -69,7 +69,7 @@ Nothing
 ### Steps
 1. Just delete the invite from local storage.
 
-##Create Room
+## Create Room
 
 That’s local. Do it yourself.
 
