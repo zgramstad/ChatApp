@@ -2,7 +2,11 @@
 Hi! Welcome to our documentation page. All the information and resources you need to understand and implement our API will be found on this page.
 
 
-### 
+# Table of Contents
+* **Quick Start Guide**
+* **Current Data Types**
+* **FAQs**
+* **Possible Changes and Updates**
 
 <!--# Understanding Our API
 
@@ -138,7 +142,7 @@ An invite is just a RoomId of the room the invite was sent from and the stub of 
 You probably want to be able to view and respond to multiple invites simultaneously (not having a newer one overwrite an older one), so it's probably a good idea to have some sort of list to store all your invites. It also might be nice to encapsulate methods like accepting and declining in your invite object (if you define it as an object).
 
 ### User
-This is an implicit data type, but it would probably be nice to define one. (We might even define one later). The user could have fields such as its name to be prepended to messages, pending invites, and its current chatrooms. All of this could just sit in the model. However, no one wants that (**DECOUPLE EVERYTHING!!!**).
+This is an implicit data type, but it would probably be nice to define one. (We might even define one later). The user could have fields such as its name to be prepended to messages, a list of pending invites, and its current chatrooms. All of this could just sit in the model. However, no one wants that (**DECOUPLE EVERYTHING!!!**).
 
 ### IStub
 
