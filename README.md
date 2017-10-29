@@ -3,18 +3,57 @@ Hi! Welcome to our documentation page. All the information and resources you nee
 
 
 # Table of Contents
+* [**Understanding Our API**](https://github.com/zgramstad/ChatApp/blob/master/README.md#current-data-types)
 * [**Quick Start Guide**](https://github.com/zgramstad/ChatApp/blob/master/README.md#quick-start-guide)
-* [**Current Data Types**](https://github.com/zgramstad/ChatApp/blob/master/README.md#current-data-types)
 * [**FAQs**](https://github.com/zgramstad/ChatApp/blob/master/README.md#faqs)
 * [**Possible Changes and Updates**](https://github.com/zgramstad/ChatApp/blob/master/README.md#possible-changes-and-updates)
 
-<!--# Understanding Our API
+# Understanding Our API (Definitions)
 
-# Objects
+
+
+<!--# Objects
 
 # The Stub
 
 # Use Cases-->
+
+
+### ChatRoom
+
+One of the benefits of our current implementation is that you can define a chatroom and store however you see fit. At the very least you need these fields:
+
+`ChatRoom {String: RoomID, IStub[]: Occupants}`
+
+Everything else is up to you. What it might be nice to do is to define methods for your ChatRoom that use our API (e.g.`sendMessage(Message)` could do the looping through the stubs for you; `inviteUser(userStub)` could just pass in the RoomID of the room, get your own remote stub from its closure, and call `userStub.receiveInvite(remoteSelfStub, roomID)`; there are other possible use cases)
+
+### Invite
+
+An invite is just a RoomId of the room the invite was sent from and the stub of the user who sent it.
+`Invite {String: roomId, IStub: inviterStub}`
+
+You probably want to be able to view and respond to multiple invites simultaneously (not having a newer one overwrite an older one), so it's probably a good idea to have some sort of list to store all your invites. It also might be nice to encapsulate methods like accepting and declining in your invite object (if you define it as an object).
+
+### User
+This is an implicit data type, but it would probably be nice to define one. (We might even define one later). The user could have fields such as its name to be prepended to messages, a list of pending invites, and its current chatrooms. All of this could just sit in the model. However, no one wants that (**DECOUPLE EVERYTHING!!!**).
+
+### IStub
+
+This is currently how we perform any interactions from one user's perspective to another. It is composed of all methods needed to interact between users. 
+
+* `Map<String, String> sendRoomNames()`
+* `IStub[] sendOccupants(String : roomID)`
+* `Integer addUserToRoom(IStub : userStub, String: roomID)`
+* `Integer receiveInvite(IStub : userStub, String : roomID)`
+* `Integer removeUserFromRoom(IStub : userStub, String : roomID)`
+* `Integer receiveMessage(Class<T> : classType, DataPacket<T, S> : data, String : roomID)`
+
+### IMessage
+
+An `IMessage` is what is sent inside a `DataPacket`. Processing messages is via the visitor design pattern. A message is the host defined as having a `type`, `data` (what to display), a `name` (the display name of the sender) and a `process()` method (how to display it).
+
+`receiveMessage()` has various message types it can handle. If the message is of known type, then the system uses its own protocol to display it. However, if a message is received that contains a type unknown to the system, `receiveMessage()` calls the message's own `process()` method.
+
 
 
 
@@ -107,7 +146,7 @@ Nothing
 
 *You will notice that our API only allows sending a message to a single person. This allows private messages (like rejecting an invite) even within a group.*
 
-##Send a Message to a Group
+## Send a Message to a Group
 ### Context (What you need prior)
 * `remoteUserStubsArray` - the list of stubs that you want to send a message to
 * `roomId` - the roomId of the room you want to send the message to.
@@ -124,42 +163,6 @@ i.e For each `remoteUserStub` in `remoteUserStubsList`, do: `remoteUserStub.rece
 
 That’s local. Do it yourself.
 
-# Current Data Types
-
-### ChatRoom
-
-One of the benefits of our current implementation is that you can define a chatroom and store however you see fit. At the very least you need these fields:
-
-`ChatRoom {String: RoomID, IStub[]: Occupants}`
-
-Everything else is up to you. What it might be nice to do is to define methods for your ChatRoom that use our API (e.g.`sendMessage(Message)` could do the looping through the stubs for you; `inviteUser(userStub)` could just pass in the RoomID of the room, get your own remote stub from its closure, and call `userStub.receiveInvite(remoteSelfStub, roomID)`; there are other possible use cases)
-
-### Invite
-
-An invite is just a RoomId of the room the invite was sent from and the stub of the user who sent it.
-`Invite {String: roomId, IStub: inviterStub}`
-
-You probably want to be able to view and respond to multiple invites simultaneously (not having a newer one overwrite an older one), so it's probably a good idea to have some sort of list to store all your invites. It also might be nice to encapsulate methods like accepting and declining in your invite object (if you define it as an object).
-
-### User
-This is an implicit data type, but it would probably be nice to define one. (We might even define one later). The user could have fields such as its name to be prepended to messages, a list of pending invites, and its current chatrooms. All of this could just sit in the model. However, no one wants that (**DECOUPLE EVERYTHING!!!**).
-
-### IStub
-
-This is currently how we perform any interactions from one user's perspective to another. It is composed of all methods needed to interact between users. 
-
-* `Map<String, String> sendRoomNames()`
-* `IStub[] sendOccupants(String : roomID)`
-* `Integer addUserToRoom(IStub : userStub, String: roomID)`
-* `Integer receiveInvite(IStub : userStub, String : roomID)`
-* `Integer removeUserFromRoom(IStub : userStub, String : roomID)`
-* `Integer receiveMessage(Class<T> : classType, DataPacket<T, S> : data, String : roomID)`
-
-### IMessage
-
-An `IMessage` is what is sent inside a `DataPacket`. Processing messages is via the visitor design pattern. A message is the host defined as having a `type`, `data` (what to display), a `name` (the display name of the sender) and a `process()` method (how to display it).
-
-`receiveMessage()` has various message types it can handle. If the message is of known type, then the system uses its own protocol to display it. However, if a message is received that contains a type unknown to the system, `receiveMessage()` calls the message's own `process()` method.
 
 # FAQs
 
