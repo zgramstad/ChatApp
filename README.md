@@ -171,7 +171,7 @@ Will be updated upon feedback.
 # Possible Changes and Updates
 
 ### 1. Division of Stubs
-There seems to be a sort of division falling out of our API methods. We might be able to split things up this way. Maybe not now since it would take some refactoring, but on the revision. It might make sense to have room stubs for each of intuition and reduction of parameters:
+Depends on the scalability and ease-of-use of the current ChatRoom paradigm, we may upgrade to room stubs in subsequent iterations of the API design as such:
 
 ### User
 * `Map<String, String> sendRoomNames()` 
@@ -183,16 +183,16 @@ There seems to be a sort of division falling out of our API methods. We might be
 * `Integer addUserToRoom(IStub : userStub)`
 * `Integer removeUserFromRoom(IStub : userStub)`
 
-
 ### 2. Perspective of Method Calls
-Currently all method names are from the perspective of the stub. However, it is definitely more intuitive to have the method names be from the perspective of the one calling the methods, so that could change (`sendOccupants` -> `getOccupants`, `receiveInvite` -> `sendInvite`). However, we all have IDEs with autocomplete, so it probably wouldn't be to difficult either way.
+Consider this semantic: to possess a friend's mobile number (or facebook we-are-friends status) is to possess a point-of-contact with her/him. In our API, to possess a friend's stub achieves the same effect. Calling methods on a stub is to ''''cause'''' a friend to do something for you. For instance, `friendStub.receiveMessage` causes friend to receive a message. `friendStub.sendRooms` causes friend to send his cache of chat rooms. This is exactly what we set out to do with our API.
 
+However, some might say that it is more intuitive to have the methods named from the perspective of the user. If it improves net programmer happiness, we could potentially change the name `sendOccupants` to `getOccupants`, `receiveInvite` to `sendInvite`, etc. We care about our clients :)
 
 ### 3. Do we really need `connectToIP`?
-Connecting to an IP is a critical part of the interaction between users, but it is currently a combination of just the standard RMIServer 2 line code (to connect to an IP and get the stub) and the `sendRoomNames()` method on the `remoteUserStub` that is returned. So we might be able to assume that the method will be written by others.
+Connecting to an IP is a critical part of the interaction between users, but it is currently a combination of just the standard RMIServer 2 line code (to connect to an IP and get the stub) and the `sendRoomNames()` method on the `remoteUserStub` that is returned. We can safely assume that it is implemented elsewhere.
 
 ### 4. Predefined vs. Freedom to Define
-Should we pre-define the needed objects such as Invite, ChatRoom, User, etc. that people should use? This would encapsulate a lot of the methods that are needed, meaning that it would be more clear what each thing should do. However, it would mean that we would be restricting people to implement things the way we see them, and it would mean that our API would not necessarily be clean, orthogonal, and minimal. Or we could define interfaces and allow the users of our API to define the exact implementation. How much control should we (and are we allowed to) take?
+Should we pre-define the needed objects such as Invite, ChatRoom, User, etc. that people should use? This would encapsulate a lot of the methods that are needed, meaning that it would be more clear what each thing should do. However, it would mean that we would be restricting people to implement things the way we see them, and it would mean that our API would not necessarily be clean, orthogonal, and minimal. Or we could define interfaces and allow the users of our API to define the exact implementation. We understand and appreciate the fact that different programmers have vastly different coding habits. We take it upon ourselves to maximize the programmmer's creative space, while ensuring that, collectively, we can all get the job done.
 
 ### 5. Concurrency
-It is probably a good idea to use objects from the `java.util.concurrency` package, so the rare situations like receiving multiple simultaneous invites or messages are handled. AHowever, in peer-to-peer networks with local copies of the same data shared among everyone, it seems that maintaining concurrency is too complicated of a problem to worry about given the rarity of the possible data race occurences.
+It is probably a good idea to use objects from the `java.util.concurrency` package, so the rare situations like receiving multiple simultaneous invites or messages are handled. However one might argue that, in peer-to-peer networks with local copies of the same data shared among everyone, maintaining concurrency is a sparse problem to consider. For scalability sake, it deserves attention in future iterations.
