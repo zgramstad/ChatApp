@@ -25,7 +25,7 @@ One of the benefits of our current implementation is that you can define a chatr
 
 `ChatRoom {String: RoomID, IStub[]: Occupants}`
 
-Everything else is up to you. What it might be nice to do is to define methods for your ChatRoom that use our API (e.g.`sendMessage(Message)` could do the looping through the stubs for you; `inviteUser(userStub)` could just pass in the RoomID of the room, get your own remote stub from its closure, and call `userStub.receiveInvite(remoteSelfStub, roomID)`; there are other possible use cases)
+The RoomID is unique, and we think it's a good idea to use the timestamp of the room's creation. Everything else is up to you (we would also suggest a name). What it might be nice to do is to define methods for your ChatRoom that use our API (e.g.`sendMessage(Message)` could do the looping through the stubs for you; `inviteUser(userStub)` could just pass in the RoomID of the room, get your own remote stub from its closure, and call `userStub.receiveInvite(remoteSelfStub, roomID)`; there are other possible use cases)
 
 ### Invite
 
