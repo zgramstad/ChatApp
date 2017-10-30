@@ -90,7 +90,7 @@ Nothing
 * `remoteSelfStub` - your own remote stub to be sent
 
 ### Steps
-1. Get Occupants from `remoteUserStub` and `roomId`: `userStubs = remoteUserStub.getOccupants(roomId)`
+1. Get Occupants from `remoteUserStub` and `roomId`: `userStubs = remoteUserStub.sendOccupants(roomId)`
 1. Foreach `stub` in `userStubs`
 	1. Add `remoteSelfStub` to everyone else’s rooms: `stub.addUserToRoom(RemoteSelfStub, RoomId)`
 1. *Add user to my room if add was successful (could this cause problems with a mismatch in separate local chat rooms?)*	
@@ -116,7 +116,7 @@ Nothing
 * `remoteSelfStub` - your own remote stub to be sent
 
 ### Steps
-1. Get Occupants from `remoteUserStub` and `roomId`: `userStubs = remoteUserStub.getOccupants(roomId)`
+1. Get Occupants from `remoteUserStub` and `roomId`: `userStubs = remoteUserStub.sendOccupants(roomId)`
 1. Foreach `stub` in `userStubs` + `remoteUserStub`
 	1. Add `remoteSelfStub` to everyone else’s rooms: `stub.addUserToRoom(RemoteSelfStub, RoomId)`
 1. *Add user to my room if add was successful (could this cause problems with a mismatch in separate local chat rooms?)*
