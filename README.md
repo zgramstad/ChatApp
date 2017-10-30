@@ -166,7 +166,7 @@ That’s local. Do it yourself.
 
 # FAQs
 
-Will be updated upon feedback.
+Will be updated upon feedback. Feel free to create a pull request to add your own!
 
 # Possible Changes and Updates
 
