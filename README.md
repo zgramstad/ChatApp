@@ -1,4 +1,4 @@
-# CURRENTLY UNDER CONSTRUCTION. NOT FULLY UPDATED.
+# CURRENTLY UNDER CONSTRUCTION. NOT FULLY UPDATED TO REPRESENT CHANGES.
 
 ## ChatAPP Documentation for Group B
 Hi! Welcome to our documentation page. All the information and resources you need to understand and implement our API will be found on this page.
