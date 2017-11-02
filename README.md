@@ -32,7 +32,7 @@ A Chat Room is always defined from a user's perspective. It is just the set of u
 
 ### Invite
 
-An invite is just a gateway inside a room. Therefore, sending an invite is just sending your internal perspective of the room.
+An invite is just a gateway to the inside of a room. Therefore, sending an invite is just sending your internal perspective of the room.
 
 # Interfaces
 
