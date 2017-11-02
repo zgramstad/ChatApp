@@ -1,5 +1,3 @@
-# CURRENTLY UNDER CONSTRUCTION. NOT FULLY UPDATED TO REPRESENT CHANGES.
-
 ## ChatAPP Documentation for Group B
 Hi! Welcome to our documentation page. All the information and resources you need to understand and implement our API will be found on this page.
 
@@ -20,46 +18,78 @@ Hi! Welcome to our documentation page. All the information and resources you nee
 
 # Use Cases-->
 
+### User
+A User is simultaneously in two different states: outside of a room and inside of a chatroom.
 
-### ChatRoom
+Outside of a room: Each user has one version of themselves that exists completely decoupled from any specific room. This view is how others connect to the user (see what rooms the user is in and send the user invites). This means that the user has a set of their own presences in each room and a list of pending invites.
 
-One of the benefits of our current implementation is that you can define a chatroom and store however you see fit. At the very least you need these fields:
+Inside of a room: A user has a unique "presence" for every room they are in. This presence allows others to communicate with them within a given room. This presence is also what a user sends to others to allow them to join them in a specific room. 
 
-`ChatRoom {String: RoomID, IStub[]: Occupants}`
 
-The RoomID is unique, and we think it's a good idea to use the timestamp of the room's creation. Everything else is up to you (we would also suggest a name). What it might be nice to do is to define methods for your ChatRoom that use our API (e.g.`sendMessage(Message)` could do the looping through the stubs for you; `inviteUser(userStub)` could just pass in the RoomID of the room, get your own remote stub from its closure, and call `userStub.receiveInvite(remoteSelfStub, roomID)`; there are other possible use cases)
+### Chat Room
+
+A Chat Room is always defined from a user's perspective. It is just the set of users that a user sends a message to. It has a name and it has other users.
 
 ### Invite
 
-An invite is just a RoomId of the room the invite was sent from and the stub of the user who sent it.
-`Invite {String: roomId, IStub: inviterStub}`
+An invite is just a gateway inside a room. Therefore send an invite is just sending your internal connection into the room.
 
-You probably want to be able to view and respond to multiple invites simultaneously (not having a newer one overwrite an older one), so it's probably a good idea to have some sort of list to store all your invites. It also might be nice to encapsulate methods like accepting and declining in your invite object (if you define it as an object).
+# Interfaces
 
-### User
-This is an implicit data type, but it would probably be nice to define one. (We might even define one later). The user could have fields such as its name to be prepended to messages, a list of pending invites, and its current chatrooms. All of this could just sit in the model. However, no one wants that (**DECOUPLE EVERYTHING!!!**).
+### *IConnect*
 
-### IStub
+This is how we represent a user outside (or decoupled from) a room. Every user only need one of these. Use it to initiate a connection with a user.
 
-This is currently how we perform any interactions from one user's perspective to another. It is composed of all methods needed to interact between users. 
+**Fields**
 
-* `Map<String, String> sendRoomNames()`
-* `IStub[] sendOccupants(String : roomID)`
-* `Integer addUserToRoom(IStub : userStub, String: roomID)`
-* `Integer receiveInvite(IStub : userStub, String : roomID)`
-* `Integer removeUserFromRoom(IStub : userStub, String : roomID)`
-* `Integer receiveMessage(Class<T> : classType, DataPacket<T, S> : data, String : roomID)`
+* `Set<ICommunicate> roomsContainingUser`
+* `ConcurArrayList<ICommunicate> pendingInvites`
 
-### IMessage
+**Methods**
 
-An `IMessage` is what is sent inside a `DataPacket`. Processing messages is via the visitor design pattern. A message is the host defined as having a `type` (the type of the data), `data` (what to display), a `name` (the display name of the sender) and a `process()` method (how to display it).
+* `Set<ICommunicate> getRooms()`
+* `Integer receiveInviteFrom(ICommunicate: sender)`
 
-`receiveMessage()` has various message types it can handle. If the message is of known type, then the system uses its own protocol to display it. However, if a message is received that contains a type unknown to the system, `receiveMessage()` calls the message's own `process()` method.
+### *ICommunicate*
+
+This is how we represent interactions within a room. It can be thought of as a user's perspective of a given room. Users have a unique ICommunicate per room they are apart of.
+
+**Fields**
+
+* `String UserName`
+* `String RoomName`
+* `Set<ICommunicate> peerStubs`
+* `ILocalDisplayAdapter displayAdapter`
+* `ConcurrentMap<ICommunicate, DataPacket> pendingMessages`
+* `ConcurrentMap<Class<T>, ADataPacketAlgoCmd> commands*`
+
+\* reference to a single command mapping for the user
 
 
+**Methods**
+
+* `Set<ICommunicate> : getPeers()`
+* `Integer : add(ICommunicate: userToAdd)`
+* `Integer : remove(ICommunicate: userToRemove)`
+* `Integer : receiveMessageFrom(ICommunicate : sender, DataPacket<T> :  message)`
+* `ADataPacketAlgoCmd : getCmd(Class<T> :  classType)`
+
+### *ILocalDisplayAdapter*
+
+This is nothing more than a direct connection to an MVC. In order to have non-routing architecture, each *ICommunicate* is coupled with an *ILocalDisplayAdapter* that pushes Components straight to the View. Thus a remote user can send across a *Factory* that produces a component and the ILocalDiplayAdapter can append it to the view.
+
+**Fields**
+
+None
+
+
+**Methods**
+
+* `Integer append(Factory<JComponent> messageFactory)`
 
 
 # Quick Start Guide
+# CURRENTLY UNDER CONSTRUCTION. NOT FULLY UPDATED TO REPRESENT CHANGES.
 
 This guide should step you through how to implement the basic functionality of a chat application. You are free to implement your chat app differently, but this is what we think works best given the methods we defined for the API.
 
